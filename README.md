@@ -23,7 +23,7 @@ will return an error messgae as this image name is not provided.
 
 ### Example 2
 http://localhost:3000/api/images?name=laptop&width=-200&height=300
-OR
+#### OR
 http://localhost:3000/api/images?name=palmtunnel&width=200&height=-300
 
 will return an error messgae as this image width and height must be grater than 1.
