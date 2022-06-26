@@ -5,19 +5,26 @@ import resizeImage from '../../image-processing';
 
 const imagesRoutes = Router();
 
-imagesRoutes.get('/', async (req: Request, res: Response) => {
-  const imageName = req.query.imageName as string;
-  const imageWidth = parseInt(req.query.imageWidth as string);
-  const imageHeight = parseInt(req.query.imageHeight as string);
+imagesRoutes.get('/api/images', async (req: Request, res: Response) => {
+  const name = req.query.name as string;
+  const width = parseInt(req.query.width as string, 10);
+  const height = parseInt(req.query.height as string, 10);
+
+  if (name === undefined) {
+    return res
+      .status(400)
+      .send('Bad request, query parameter (name) is required.');
+  }
 
   const imgLocation =
-    path.resolve('./') + `/assets/images/original${imageName}.jpg`;
+    path.resolve('./') + `/assets/images/original${name}.jpg`;
   const resizedImgLocation =
     path.resolve('./') +
-    `/assets/images/resized${imageName}_${imageWidth}X${imageHeight}.jpg`;
+    `/assets/images/resized${name}_${width}X${height}.jpg`;
+
 
   // check query synatx
-  checkImage(imageName, imageWidth, imageHeight, res);
+  checkImage(name, width, height, res);
 
   // check if file exists in assets folder
   checkExistence(imgLocation, res);
@@ -35,8 +42,8 @@ imagesRoutes.get('/', async (req: Request, res: Response) => {
   } else {
     // if file not available, then resize,
     resizeImage(
-      imageWidth,
-      imageHeight,
+      width,
+      height,
       imgLocation,
       resizedImgLocation,
       (_err, bufferedData) => {
@@ -58,17 +65,17 @@ const checkImage = async (
   height: number,
   res: Response
 ) => {
-  if (name ==="") {
+  if (name === undefined) {
     return res.status(400).send('Invalid request, Please enter an image name');
-  } else if (width === null || width < 1) {
+  } else if (!width || width < 1) {
     return res
-      .status(400)
+      .status(404)
       .send(
         'Invalid request, Please enter an image width value greater than 1'
       );
-  } else if (height === null || height < 1) {
+  } else if (!height || height < 1) {
     return res
-      .status(400)
+      .status(404)
       .send(
         'Invalid request, Please enter an image height value greater than 1'
       );
