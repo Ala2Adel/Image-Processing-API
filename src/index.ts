@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
 // start the Express server
 app.listen(port, (): void => {
   // make sure that path exists
-  const imageLocation = path.resolve(__dirname, '../assets/thumb');
+  const imageLocation = path.resolve(__dirname, '../assets/images/resized');
 
   if (!existsSync(imageLocation)) {
     // if image does not exist, then make directory

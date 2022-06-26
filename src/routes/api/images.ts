@@ -58,7 +58,7 @@ const checkImage = async (
   height: number,
   res: Response
 ) => {
-  if (name.length == 0) {
+  if (name ==="") {
     return res.status(400).send('Invalid request, Please enter an image name');
   } else if (width === null || width < 1) {
     return res
