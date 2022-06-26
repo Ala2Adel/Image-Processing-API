@@ -14,12 +14,12 @@ const resizeImage = async (
   height: number,
   oldImage: string,
   resizedImage: string,
-  callback: (err: NodeJS.ErrnoException | null, data: Buffer) => void
 ) => {
   try {
-    await sharp(oldImage).resize(width, height).toFile(resizedImage);
+    await sharp(oldImage).resize(width, height).toFormat('jpg').toFile(resizedImage);
+    return resizeImage;
   } catch (err) {
-    return 'Image could be be processed';
+    return 'Image could be be processed. Please try again';
   }
 };
 

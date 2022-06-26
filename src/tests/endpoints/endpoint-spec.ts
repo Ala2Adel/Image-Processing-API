@@ -5,7 +5,7 @@ const request = supertest(app);
 
 describe('Testing endpoints /api/images', () => {
   it('gets /api/images being used but without parameters', async () => {
-    await request.get('/api/images').expect(400);
+    await request.get('/api/images').expect(404);
   });
 
   it('responds with 404 if called correctly but image does not exist', async () => {
