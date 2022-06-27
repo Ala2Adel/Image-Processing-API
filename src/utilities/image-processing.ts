@@ -1,5 +1,3 @@
-import { Router, Request, Response } from 'express';
-import path from 'path';
 import sharp from 'sharp';
 
 /**
@@ -10,17 +8,20 @@ import sharp from 'sharp';
  */
 
 const resizeImage = async (
-  width: number,
-  height: number,
-  oldImage: string,
-  resizedImage: string,
+    width: number,
+    height: number,
+    oldImage: string,
+    resizedImage: string
 ) => {
-  try {
-    await sharp(oldImage).resize(width, height).toFormat('jpg').toFile(resizedImage);
-    return resizeImage;
-  } catch (err) {
-    return 'Image could be be processed. Please try again';
-  }
+    try {
+        await sharp(oldImage)
+            .resize(width, height)
+            .toFormat('jpg')
+            .toFile(resizedImage);
+        return resizeImage;
+    } catch (err) {
+        return 'Image could be be processed. Please try again';
+    }
 };
 
 export default resizeImage;
